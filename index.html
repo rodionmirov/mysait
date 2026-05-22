@@ -62,7 +62,6 @@
       display: inline-block;
     }
 
-    /* Линия под заголовком — теперь на всю ширину текста */
     h2::after {
       content: '';
       position: absolute;
@@ -576,7 +575,6 @@
       position: relative;
     }
 
-    /* Убираем линию у внутренних заголовков */
     .rules-box h3::after,
     .contacts-box h3::after {
       display: none;
@@ -853,6 +851,7 @@
       letter-spacing: 2px;
     }
 
+    /* Поля для дополнительных гостей */
     .additional-guests {
       display: flex;
       flex-direction: column;
@@ -869,7 +868,12 @@
 
     .additional-guest-field.show {
       opacity: 1;
-      max-height: 60px;
+      max-height: 70px;
+    }
+
+    .additional-guest-field input {
+      width: 100%;
+      box-sizing: border-box;
     }
 
     #successMessage {
