@@ -30,6 +30,12 @@
       background: var(--cream);
       color: var(--dark);
       scroll-behavior: smooth;
+      opacity: 0;
+      animation: bodyFadeIn 0.8s ease forwards;
+    }
+
+    @keyframes bodyFadeIn {
+      to { opacity: 1; }
     }
 
     section {
@@ -52,6 +58,30 @@
       opacity: 0;
       transform: translateY(30px);
       transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Линия под заголовком — теперь на всю ширину текста */
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent 0%,
+        var(--olive-light) 10%,
+        var(--olive-light) 90%,
+        transparent 100%
+      );
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+    }
+
+    h2.visible::after {
+      width: 100%;
     }
 
     h2.visible {
@@ -77,10 +107,28 @@
       text-decoration: none;
       text-align: center;
       border-radius: 50px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--olive);
+      transition: left 0.4s ease;
+      z-index: -1;
+    }
+
+    .btn:hover::before {
+      left: 0;
     }
 
     .btn:hover {
-      background: var(--olive);
       color: var(--white);
     }
 
@@ -104,10 +152,28 @@
       text-align: center;
       font-weight: 500;
       border-radius: 50px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn-outline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--olive);
+      transition: left 0.4s ease;
+      z-index: -1;
+    }
+
+    .btn-outline:hover::before {
+      left: 0;
     }
 
     .btn-outline:hover {
-      background: var(--olive);
       color: var(--white);
     }
 
@@ -120,12 +186,15 @@
       background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.25)), url('images/fabric-bg.jpg') center/cover no-repeat;
       color: var(--white);
       text-align: center;
+      position: relative;
     }
 
     .hero-content {
       opacity: 0;
       transform: translateY(40px);
       animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      position: relative;
+      z-index: 2;
     }
 
     @keyframes fadeInUp {
@@ -150,6 +219,18 @@
       text-shadow: 2px 2px 15px rgba(0,0,0,0.4);
       margin-bottom: 15px;
       letter-spacing: 2px;
+      animation: shimmer 3s ease-in-out infinite;
+      background: linear-gradient(90deg, #fff 0%, #f5f0e8 50%, #fff 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 0% center; }
+      50% { background-position: 200% center; }
+      100% { background-position: 0% center; }
     }
 
     .hero .date {
@@ -168,6 +249,31 @@
       opacity: 0.6;
     }
 
+    /* Плавающие частицы */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+      animation: float linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+    }
+
     /* Таймер */
     .timer {
       display: flex;
@@ -175,6 +281,8 @@
       margin: 45px 0;
       flex-wrap: wrap;
       justify-content: center;
+      position: relative;
+      z-index: 2;
     }
 
     .timer-box {
@@ -187,6 +295,12 @@
       border-radius: 15px;
       opacity: 0;
       animation: fadeIn 0.8s ease forwards;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .timer-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
 
     .timer-box:nth-child(1) { animation-delay: 0.3s; }
@@ -221,6 +335,7 @@
       color: var(--white);
       opacity: 0.7;
       transition: opacity 0.3s;
+      z-index: 2;
     }
 
     .arrow-down:hover {
@@ -235,7 +350,8 @@
 
     /* ---------- РАСПИСАНИЕ ---------- */
     .timeline-section {
-      background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('images/gr.jpg') center/cover no-repeat;
+      background: linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)), url('images/gr.jpg') center/cover no-repeat;
+      background-attachment: fixed;
       position: relative;
     }
 
@@ -268,6 +384,12 @@
       opacity: 0;
       transform: translateX(-20px);
       transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    }
+
+    .time-block:hover {
+      transform: translateX(5px) !important;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
     }
 
     .time-block.visible {
@@ -288,6 +410,12 @@
       height: 10px;
       background: var(--olive);
       border-radius: 50%;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .time-block:hover::before {
+      transform: scale(1.5);
+      box-shadow: 0 0 10px var(--olive-light);
     }
 
     .time-block h4 {
@@ -327,6 +455,11 @@
       transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    .restaurant-card:hover {
+      box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+      transform: translateY(-5px);
+    }
+
     .restaurant-card.visible {
       opacity: 1;
       transform: translateY(0);
@@ -338,6 +471,11 @@
       background-size: cover;
       background-position: center;
       position: relative;
+      transition: transform 0.6s ease;
+    }
+
+    .restaurant-card:hover .restaurant-image {
+      transform: scale(1.03);
     }
 
     .restaurant-image::after {
@@ -415,6 +553,11 @@
       opacity: 0;
       transform: translateY(30px);
       transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    .rules-box:hover, .contacts-box:hover {
+      box-shadow: 0 15px 40px rgba(0,0,0,0.07);
     }
 
     .rules-box.visible, .contacts-box.visible {
@@ -430,6 +573,13 @@
       text-align: center;
       font-weight: 400;
       letter-spacing: 1px;
+      position: relative;
+    }
+
+    /* Убираем линию у внутренних заголовков */
+    .rules-box h3::after,
+    .contacts-box h3::after {
+      display: none;
     }
 
     .rule-item {
@@ -438,6 +588,11 @@
       margin-bottom: 25px;
       padding-bottom: 25px;
       border-bottom: 1px solid #f0ece6;
+      transition: transform 0.3s ease;
+    }
+
+    .rule-item:hover {
+      transform: translateX(5px);
     }
 
     .rule-item:last-child {
@@ -452,6 +607,11 @@
       color: var(--olive-light);
       min-width: 40px;
       font-weight: 400;
+      transition: color 0.3s ease;
+    }
+
+    .rule-item:hover .rule-number {
+      color: var(--olive);
     }
 
     .rule-content h4 {
@@ -481,6 +641,11 @@
       gap: 25px;
       padding: 14px 0;
       border-bottom: 1px solid #f0ece6;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-row:hover {
+      transform: translateX(5px);
     }
 
     .contact-row:last-child {
@@ -523,6 +688,12 @@
       align-items: center;
       gap: 15px;
       border-bottom: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .telegram-row:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     }
 
     .telegram-link {
@@ -569,6 +740,7 @@
       opacity: 0;
       transform: translateY(30px);
       transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+      border: 1px solid rgba(255,255,255,0.6);
     }
 
     form.visible {
@@ -585,12 +757,13 @@
       font-size: 0.9em;
       letter-spacing: 0.5px;
       color: var(--dark);
-      transition: border-color 0.3s;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
 
     input:focus, select:focus {
       outline: none;
       border-color: var(--olive);
+      box-shadow: 0 0 0 3px rgba(107, 112, 92, 0.1);
     }
 
     .radio-group {
@@ -620,7 +793,6 @@
       transform: scale(1.1);
     }
 
-    /* Стильный селект количества гостей */
     .guests-selector {
       display: flex;
       align-items: center;
@@ -649,11 +821,13 @@
       background: var(--olive);
       color: var(--white);
       border-color: var(--olive);
+      transform: scale(1.1);
     }
 
     .guest-count-btn:disabled {
       opacity: 0.3;
       cursor: not-allowed;
+      transform: none;
     }
 
     .guest-count-display {
@@ -662,6 +836,13 @@
       min-width: 40px;
       text-align: center;
       font-weight: 500;
+      animation: countPop 0.3s ease;
+    }
+
+    @keyframes countPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
     }
 
     .guest-count-label {
@@ -672,7 +853,6 @@
       letter-spacing: 2px;
     }
 
-    /* Поля для дополнительных гостей */
     .additional-guests {
       display: flex;
       flex-direction: column;
@@ -699,6 +879,7 @@
       font-size: 1.1em;
       text-align: center;
       letter-spacing: 1px;
+      animation: fadeInUp 0.5s ease;
     }
 
     /* ---------- НАВИГАЦИЯ ---------- */
@@ -822,7 +1003,6 @@
         background-attachment: scroll;
       }
       
-      /* Исправления для мобильного расписания */
       .timeline-container {
         flex-direction: column;
         align-items: center;
@@ -843,6 +1023,10 @@
       .time-block::before {
         top: 20px;
       }
+
+      .timeline-section {
+        background-attachment: scroll;
+      }
     }
   </style>
 </head>
@@ -859,6 +1043,9 @@
 
 <!-- Секция 1: Приглашение -->
 <section id="home" class="hero">
+  <!-- Частицы -->
+  <div class="particles" id="particles"></div>
+
   <div class="hero-content">
     <p class="subtitle">Мы будем очень рады видеть Вас рядом</p>
     <p class="subtitle">в этот особенный для нас день</p>
@@ -1032,6 +1219,25 @@
 </footer>
 
 <script>
+  // ==========================================
+  // 0. ПЛАВАЮЩИЕ ЧАСТИЦЫ
+  // ==========================================
+  (function createParticles() {
+    const container = document.getElementById('particles');
+    if (!container) return;
+    for (let i = 0; i < 20; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      const size = Math.random() * 6 + 2;
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDuration = Math.random() * 10 + 15 + 's';
+      particle.style.animationDelay = Math.random() * 10 + 's';
+      container.appendChild(particle);
+    }
+  })();
+
   // ==========================================
   // 1. АНИМАЦИИ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ
   // ==========================================
