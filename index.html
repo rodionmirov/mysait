@@ -235,7 +235,6 @@
 
     /* ---------- РАСПИСАНИЕ ---------- */
     .timeline-section {
-      /* Был просто белый фон, теперь — картинка с оверлеем */
       background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('images/gr.jpg') center/cover no-repeat;
       position: relative;
     }
@@ -823,9 +822,26 @@
         background-attachment: scroll;
       }
       
+      /* Исправления для мобильного расписания */
+      .timeline-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+        padding: 0 10px;
+      }
+      
       .time-block {
-        min-width: 220px;
+        min-width: auto;
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto;
         padding: 15px 15px 15px 25px;
+        text-align: left;
+      }
+      
+      .time-block::before {
+        top: 20px;
       }
     }
   </style>
@@ -922,7 +938,7 @@
         <div class="rule-number">01</div>
         <div class="rule-content">
           <h4>Поздравления</h4>
-          <p> Ваше присутствие — лучший подарок, но если хотите порадовать нас дополнительно, мы будем рады вкладу в наш семейный бюджет </p>
+          <p>Ваше присутствие — лучший подарок, но если хотите порадовать нас дополнительно, мы будем рады вкладу в наш семейный бюджет</p>
         </div>
       </div>
       
@@ -935,41 +951,40 @@
       </div>
     </div>
     
-<div class="contacts-box">
-  <h3>Контакты</h3>
-  
-  <div class="contact-list">
-    <div class="telegram-row">
-      <i class="fab fa-telegram-plane" style="color: var(--olive); font-size: 1.2em;"></i>
-      <a href="https://t.me/+CYGa6f4cj0ZiNDEy" target="_blank" class="telegram-link">
-        Общий телеграм-канал свадьбы
-      </a>
+    <div class="contacts-box">
+      <h3>Контакты</h3>
+      
+      <div class="contact-list">
+        <div class="telegram-row">
+          <i class="fab fa-telegram-plane" style="color: var(--olive); font-size: 1.2em;"></i>
+          <a href="https://t.me/+CYGa6f4cj0ZiNDEy" target="_blank" class="telegram-link">
+            Общий телеграм-канал свадьбы
+          </a>
+        </div>
+        
+        <div class="telegram-row">
+          <i class="fab fa-yandex" style="color: var(--olive); font-size: 1.2em;"></i>
+          <a href="https://yandex.ru/chat/#/join/cb9380ec-9f52-4be0-9381-fecc43401365" target="_blank" class="telegram-link">
+            Общий яндекс-канал свадьбы
+          </a>
+        </div>
+        
+        <div class="contact-row">
+          <span class="contact-label">Родион</span>
+          <span class="contact-value"><a href="tel:+79030273634"> +7 903 027-36-34</a></span>
+        </div>
+        
+        <div class="contact-row">
+          <span class="contact-label">Анна</span>
+          <span class="contact-value"><a href="tel:+79623796408"> +7 962 379-64-08</a></span>
+        </div>
+        
+        <div class="contact-row">
+          <span class="contact-label">Ведущий</span>
+          <span class="contact-value"><a href="tel:+79510763586">+7 951 076-35-86</a> &nbsp;—&nbsp; Алексей</span>
+        </div>
+      </div>
     </div>
-    
-    <!-- Обновленная строка с Яндекс.Телемостом -->
-    <div class="telegram-row">
-      <i class="fab fa-yandex" style="color: var(--olive); font-size: 1.2em;"></i>
-      <a href="https://yandex.ru/chat/#/join/cb9380ec-9f52-4be0-9381-fecc43401365" target="_blank" class="telegram-link">
-        Общий яндекс-канал свадьбы
-      </a>
-    </div>
-    
-    <div class="contact-row">
-      <span class="contact-label">Родион</span>
-      <span class="contact-value"><a href="tel:+79030273634"> +7 903 027-36-34</a></span>
-    </div>
-    
-    <div class="contact-row">
-      <span class="contact-label">Анна</span>
-      <span class="contact-value"><a href="tel:+79623796408"> +7 962 379-64-08</a></span>
-    </div>
-    
-    <div class="contact-row">
-      <span class="contact-label">Ведущий</span>
-      <span class="contact-value"><a href="tel:+79510763586">+7 951 076-35-86</a> &nbsp;—&nbsp; Алексей</span>
-    </div>
-  </div>
-</div>
     
   </div>
 </section>
@@ -992,7 +1007,6 @@
       </label>
     </div>
 
-    <!-- Блок выбора количества гостей -->
     <div id="guestsBlock">
       <div class="guest-count-label">Количество гостей (включая вас)</div>
       <div class="guests-selector">
@@ -1001,7 +1015,6 @@
         <button type="button" class="guest-count-btn" id="guestPlus">+</button>
       </div>
       
-      <!-- Поля для дополнительных гостей -->
       <div class="additional-guests" id="additionalGuests">
         <div class="additional-guest-field" id="guest2Field">
           <input type="text" placeholder="Имя и фамилия второго гостя">
@@ -1085,16 +1098,13 @@
   const guest4Field = document.getElementById('guest4Field');
 
   function updateGuestFields() {
-    // Скрываем/показываем поля
     guest2Field.classList.toggle('show', currentGuests >= 2);
     guest3Field.classList.toggle('show', currentGuests >= 3);
     guest4Field.classList.toggle('show', currentGuests >= 4);
     
-    // Обновляем кнопки
     guestMinus.disabled = currentGuests <= 1;
     guestPlus.disabled = currentGuests >= 4;
     
-    // Обновляем счетчик
     guestCountDisplay.textContent = currentGuests;
   }
 
@@ -1107,7 +1117,6 @@
 
   guestMinus.addEventListener('click', () => {
     if (currentGuests > 1) {
-      // Очищаем соответствующее поле
       const fieldToClear = document.querySelector(`#guest${currentGuests}Field input`);
       if (fieldToClear) fieldToClear.value = '';
       currentGuests--;
@@ -1115,7 +1124,6 @@
     }
   });
 
-  // Инициализация
   updateGuestFields();
 
   // ==========================================
@@ -1146,7 +1154,6 @@
     const surname = document.getElementById('surname').value.trim();
     const status = document.querySelector('input[name="status"]:checked').value;
     
-    // Собираем всех гостей
     const additionalGuests = [];
     if (status === 'Приду' && currentGuests > 1) {
       for (let i = 2; i <= currentGuests; i++) {
@@ -1189,7 +1196,6 @@
       document.getElementById('successMessage').style.display = 'block';
       document.getElementById('weddingForm').reset();
       
-      // Сброс гостей
       currentGuests = 1;
       updateGuestFields();
       document.querySelectorAll('.additional-guest-field input').forEach(input => input.value = '');
